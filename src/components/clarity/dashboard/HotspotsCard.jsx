@@ -1,24 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import FloorPlan from "../FloorPlan";
+import HotspotScene3D from "./HotspotScene3D";
 import RippleCard from "../RippleCard";
 
-const SEV = { High: { fill: "#EF4444", r: 26 }, Medium: { fill: "#F59E0B", r: 20 }, Low: { fill: "#F59E0B", r: 13 } };
+const SEV = { High: { fill: "#EF4444", r: 11 }, Medium: { fill: "#F59E0B", r: 8.5 }, Low: { fill: "#FDBA74", r: 6 } };
 
 export default function HotspotsCard({ issues }) {
   const navigate = useNavigate();
-  const [hover, setHover] = useState(null);
 
   const spots = issues
     .filter((i) => i.collision_risk && i.collision_risk !== "None")
     .slice(0, 6)
-    .map((i, idx) => ({
-      issue: i,
-      // Values of 1 or less are stored as a fraction of the plan, anything larger is already a plan coordinate.
-      x: i.hotspot_x == null ? 70 + ((idx * 61) % 280) : i.hotspot_x <= 1 ? 30 + i.hotspot_x * 340 : i.hotspot_x,
-      y: i.hotspot_y == null ? 70 + ((idx * 47) % 120) : i.hotspot_y <= 1 ? 30 + i.hotspot_y * 180 : i.hotspot_y,
-      sev: SEV[i.collision_risk] || SEV.Low,
-    }));
+    .map((i, idx) => {
+      // Values of 1 or less are stored as a fraction of the plan, anything larger is a plan coordinate.
+      const fx = i.hotspot_x == null ? ((idx * 61) % 280) / 280 : i.hotspot_x <= 1 ? i.hotspot_x : Math.min(i.hotspot_x / 400, 1);
+      const fz = i.hotspot_y == null ? ((idx * 47) % 120) / 120 : i.hotspot_y <= 1 ? i.hotspot_y : Math.min(i.hotspot_y / 240, 1);
+      return {
+        issue: i,
+        px: 4 + fx * 32,
+        pz: 4 + fz * 16,
+        sev: SEV[i.collision_risk] || SEV.Low,
+      };
+    });
 
   return (
     <RippleCard className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
@@ -31,37 +34,11 @@ export default function HotspotsCard({ issues }) {
         </div>
       </div>
       <p className="mt-1 text-[11px] leading-relaxed text-[#6B7280]">
-        A simple floor plan of the building. Each circle marks a spot on the plan where two or more
-        trades clash. Bigger and redder means higher risk. Click a circle to open the change.
+        A 3D view of the building. Each marker sits where two or more trades clash. Bigger and redder
+        means higher risk. Drag to spin the view all the way around and click a marker to open the change.
       </p>
-      <div className="relative mt-2">
-        <FloorPlan height={220}>
-          {spots.map((s) => (
-            <circle
-              key={s.issue.id}
-              cx={s.x}
-              cy={s.y}
-              r={s.sev.r}
-              fill={s.sev.fill}
-              fillOpacity="0.3"
-              stroke={s.sev.fill}
-              strokeOpacity="0.6"
-              className="cursor-pointer"
-              onMouseEnter={() => setHover(s)}
-              onMouseLeave={() => setHover(null)}
-              onClick={() => navigate(`/changes/${s.issue.id}`)}
-            />
-          ))}
-        </FloorPlan>
-        {hover ? (
-          <div className="pointer-events-none absolute left-3 top-3 rounded-md border border-[#E5E7EB] bg-white px-2.5 py-1.5 text-[11px] shadow-sm">
-            <p className="font-medium">{[hover.issue.level, hover.issue.zone].filter(Boolean).join(", ") || hover.issue.title}</p>
-            <p className="text-[#6B7280]">1 conflict · {hover.issue.collision_risk} severity</p>
-          </div>
-        ) : null}
-        {spots.length === 0 ? (
-          <p className="absolute inset-x-0 bottom-2 text-center text-[12px] text-[#6B7280]">No collisions detected yet.</p>
-        ) : null}
+      <div className="mt-2">
+        <HotspotScene3D spots={spots} onOpen={(issue) => navigate(`/changes/${issue.id}`)} />
       </div>
     </RippleCard>
   );
