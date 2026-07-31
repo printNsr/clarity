@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import { RotateCw } from "lucide-react";
 import { PLOT_X, PLOT_Z, WALL_H } from "./houseLayout";
+import SvgTooltip from "./SvgTooltip";
 
 const W = 640, H = 300;
 
@@ -8,6 +9,7 @@ const W = 640, H = 300;
 export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFloor, onOpen }) {
   const [view, setView] = useState({ yaw: 0.6, pitch: 0.9 });
   const [hover, setHover] = useState(null);
+  const [hoverRoom, setHoverRoom] = useState(null);
   const drag = useRef(null);
   const scale = 5;
 
@@ -81,13 +83,6 @@ export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFl
   };
   const onUp = () => { drag.current = null; };
 
-  const label = hover
-    ? {
-        x: Math.min(hover.top.sx + 40, W - 190),
-        y: Math.max(hover.top.sy - 52, 14),
-      }
-    : null;
-
   return (
     <div className="relative overflow-hidden rounded-[10px] border border-[#E5E7EB] bg-[#FAFAF7]">
       <svg
@@ -102,7 +97,9 @@ export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFl
           <polygon
             key={i}
             points={poly(f.pts)}
-            fill={f.kind === "floor" ? "#F1F5F9" : f.kind === "wall" ? "#E2E8F0" : "#DCE3EC"}
+            onMouseEnter={f.kind === "floor" ? () => setHoverRoom(f.room) : undefined}
+            onMouseLeave={f.kind === "floor" ? () => setHoverRoom(null) : undefined}
+            fill={f.kind === "floor" ? (hoverRoom?.name === f.room?.name ? "#FEF3C7" : "#F1F5F9") : f.kind === "wall" ? "#E2E8F0" : "#DCE3EC"}
             fillOpacity={f.kind === "shell" ? 0.4 : f.kind === "wall" ? 0.85 : 1}
             stroke={f.kind === "floor" ? "#CBD5E1" : "#B8C2CF"}
             strokeWidth="1"
@@ -126,19 +123,33 @@ export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFl
         ))}
 
         {hover ? (
-          <g className="pointer-events-none">
-            <line x1={hover.top.sx} y1={hover.top.sy} x2={label.x} y2={label.y + 22} stroke={hover.sev.fill} strokeDasharray="3 3" />
-            <rect x={label.x} y={label.y} width="182" height="46" rx="5" fill="#FFFFFF" stroke="#E5E7EB" />
-            <text x={label.x + 8} y={label.y + 16} fontSize="9.5" fill="#1F2937" fontWeight="600">
-              {truncate(hover.issue.title, 30)}
-            </text>
-            <text x={label.x + 8} y={label.y + 29} fontSize="8.5" fill="#6B7280">
-              {[hover.issue.level, hover.issue.zone].filter(Boolean).join(" · ") || "Location not set"}
-            </text>
-            <text x={label.x + 8} y={label.y + 40} fontSize="8.5" fill={hover.sev.fill}>
-              {hover.issue.collision_risk} risk · {(hover.issue.disciplines || []).join(", ") || "trades not listed"}
-            </text>
-          </g>
+          <SvgTooltip
+            width={W}
+            height={H}
+            color={hover.sev.fill}
+            anchor={hover.top}
+            rows={[
+              { text: hover.issue.title || "Change", weight: 600, color: "#1F2937" },
+              { text: [hover.issue.level, hover.issue.zone].filter(Boolean).join(" · ") || "Location not set" },
+              {
+                text: `${hover.issue.collision_risk} risk · ${(hover.issue.disciplines || []).join(", ") || "trades not listed"}`,
+                color: hover.sev.fill,
+              },
+              { text: hover.issue.description },
+            ]}
+          />
+        ) : hoverRoom ? (
+          <SvgTooltip
+            width={W}
+            height={H}
+            color="#B45309"
+            anchor={project([hoverRoom.x + hoverRoom.w / 2, 0, hoverRoom.z + hoverRoom.d / 2])}
+            rows={[
+              { text: hoverRoom.name, weight: 600, color: "#1F2937" },
+              { text: `${hoverRoom.w} m by ${hoverRoom.d} m on ${floor}` },
+              { text: roomNote(hoverRoom, spots) },
+            ]}
+          />
         ) : null}
       </svg>
 
@@ -156,7 +167,8 @@ export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFl
 
       <button
         onClick={() => setView({ yaw: 0.6, pitch: 0.9 })}
-        className="absolute right-3 top-3 inline-flex h-7 items-center gap-1.5 rounded-md border border-[#E5E7EB] bg-white/90 px-2 text-[11px] font-medium text-[#1F2937]"
+        style={{ background: "#FFFFFF", color: "#1F2937" }}
+        className="absolute right-3 top-3 inline-flex h-7 items-center gap-1.5 rounded-md border border-[#E5E7EB] px-2 text-[11px] font-medium"
       >
         <RotateCw className="h-3 w-3" /> Reset view
       </button>
@@ -165,6 +177,14 @@ export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFl
       ) : null}
     </div>
   );
+}
+
+function roomNote(room, spots) {
+  const inside = spots.filter(
+    (s) => s.px >= room.x && s.px <= room.x + room.w && s.pz >= room.z && s.pz <= room.z + room.d
+  );
+  if (!inside.length) return "No clash recorded in this room.";
+  return inside.map((s) => `${s.issue.collision_risk} risk: ${s.issue.title}`).join(". ");
 }
 
 function truncate(text, n) {

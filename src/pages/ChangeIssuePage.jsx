@@ -55,6 +55,7 @@ export default function ChangeIssuePage() {
         <IssueMeta issue={issue} />
         <DiscussionPanel issue={issue} messages={messages} onChange={load} />
         <InsightCard
+          issue={issue}
           summary={analysis?.summary || issue.description || "Run an analysis to compare assumptions across disciplines."}
           onAnalyze={analyze}
           analyzing={analyzing}

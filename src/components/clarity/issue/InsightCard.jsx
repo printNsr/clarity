@@ -1,7 +1,8 @@
 import React from "react";
 import { Lightbulb, Loader2 } from "lucide-react";
+import IssueScene3D from "./IssueScene3D";
 
-export default function InsightCard({ summary, onAnalyze, analyzing, statusText }) {
+export default function InsightCard({ summary, onAnalyze, analyzing, statusText, issue }) {
   return (
     <div className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
       <div className="flex items-center gap-2">
@@ -10,14 +11,14 @@ export default function InsightCard({ summary, onAnalyze, analyzing, statusText 
       </div>
       <p className="mt-2 text-[12px] leading-relaxed text-[#6B7280]">{summary}</p>
 
-      <svg viewBox="0 0 240 140" className="mt-3 w-full">
-        <polygon points="30,90 130,40 210,70 110,120" fill="#F1F5F9" stroke="#CBD5E1" />
-        <polygon points="30,90 30,60 130,10 130,40" fill="#E2E8F0" stroke="#CBD5E1" />
-        <rect x="60" y="55" width="90" height="10" transform="rotate(-24 60 55)" fill="#7C3AED" opacity="0.85" />
-        <rect x="95" y="82" width="95" height="14" transform="rotate(-20 95 82)" fill="#94A3B8" opacity="0.9" />
-        <rect x="112" y="66" width="26" height="20" transform="rotate(-22 112 66)" fill="#EF4444" opacity="0.75" />
-      </svg>
-      <p className="text-center text-[11px] text-[#EF4444]">300mm overlap</p>
+      {issue ? (
+        <div className="mt-3">
+          <IssueScene3D issue={issue} />
+          <p className="mt-1 text-[11px] leading-relaxed text-[#6B7280]">
+            Drag to spin the floor all the way around. Hover a room or the marker to read what is happening there.
+          </p>
+        </div>
+      ) : null}
 
       <button
         onClick={onAnalyze}
