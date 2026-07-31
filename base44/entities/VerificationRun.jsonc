@@ -1,0 +1,33 @@
+{
+  "name": "VerificationRun",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Verified",
+        "Invalidated",
+        "Requires Review",
+        "No Longer Applicable"
+      ],
+      "default": "Pending"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "trigger": {
+      "type": "string"
+    },
+    "ran_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "issue_id"
+  ]
+}

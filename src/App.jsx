@@ -16,6 +16,19 @@ import Inbox from '@/pages/Inbox';
 import ChangeDetail from '@/pages/ChangeDetail';
 import DecisionTimeline from '@/pages/DecisionTimeline';
 import TeamPortal from '@/pages/TeamPortal';
+import ClarityLayout from '@/components/clarity/ClarityLayout';
+import ClarityDashboard from '@/pages/ClarityDashboard';
+import ChangesListPage from '@/pages/ChangesListPage';
+import ChangeIssuePage from '@/pages/ChangeIssuePage';
+import AnalysisPage from '@/pages/AnalysisPage';
+import EvidencePage from '@/pages/EvidencePage';
+import ResolvePage from '@/pages/ResolvePage';
+import VerificationPage from '@/pages/VerificationPage';
+import RfiListPage from '@/pages/RfiListPage';
+import RfiPage from '@/pages/RfiPage';
+import DrawingsListPage from '@/pages/DrawingsListPage';
+import DrawingUpdatePage from '@/pages/DrawingUpdatePage';
+import ClaritySettingsPage from '@/pages/ClaritySettingsPage';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -54,6 +67,21 @@ const AuthenticatedApp = () => {
           <Route path="/change/:id" element={<ChangeDetail />} />
           <Route path="/timeline" element={<DecisionTimeline />} />
           <Route path="/portal" element={<TeamPortal />} />
+        </Route>
+        <Route element={<ClarityLayout />}>
+          <Route path="/dashboard" element={<ClarityDashboard />} />
+          <Route path="/changes" element={<ChangesListPage />} />
+          <Route path="/collisions" element={<ChangesListPage collisionsOnly />} />
+          <Route path="/changes/:issueId" element={<ChangeIssuePage />} />
+          <Route path="/changes/:issueId/analysis" element={<AnalysisPage />} />
+          <Route path="/changes/:issueId/evidence" element={<EvidencePage />} />
+          <Route path="/changes/:issueId/resolve" element={<ResolvePage />} />
+          <Route path="/changes/:issueId/verification" element={<VerificationPage />} />
+          <Route path="/rfis" element={<RfiListPage />} />
+          <Route path="/rfis/:rfiId" element={<RfiPage />} />
+          <Route path="/drawings" element={<DrawingsListPage />} />
+          <Route path="/drawings/:drawingId/update" element={<DrawingUpdatePage />} />
+          <Route path="/settings" element={<ClaritySettingsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />

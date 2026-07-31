@@ -1,0 +1,41 @@
+{
+  "name": "DrawingUpdate",
+  "type": "object",
+  "properties": {
+    "drawing_id": {
+      "type": "string"
+    },
+    "issue_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "markup_label": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "owner_role": {
+      "type": "string"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Requested",
+        "In Progress",
+        "Updated",
+        "Cancelled"
+      ],
+      "default": "In Progress"
+    }
+  },
+  "required": [
+    "drawing_id"
+  ]
+}

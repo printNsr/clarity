@@ -1,0 +1,70 @@
+{
+  "name": "CollisionAnalysis",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string"
+    },
+    "collision_detected": {
+      "type": "boolean",
+      "default": true
+    },
+    "category": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "exact_question": {
+      "type": "string"
+    },
+    "impact_explanation": {
+      "type": "string"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "discipline": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Confirmed",
+        "Dismissed",
+        "Resolved"
+      ],
+      "default": "Confirmed"
+    }
+  },
+  "required": [
+    "issue_id"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "name": "RFI",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "issue_id": {
+      "type": "string"
+    },
+    "rfi_number": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "background": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "High"
+    },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disciplines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_drawings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "discipline": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Answered",
+        "Closed"
+      ],
+      "default": "Draft"
+    },
+    "response": {
+      "type": "string"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "rfi_number"
+  ]
+}

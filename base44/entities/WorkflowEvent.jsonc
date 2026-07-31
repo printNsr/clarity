@@ -1,0 +1,57 @@
+{
+  "name": "WorkflowEvent",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "change_created",
+        "collision_detected",
+        "analysis_completed",
+        "decision_recorded",
+        "rfi_sent",
+        "drawing_updated",
+        "verified",
+        "invalidated",
+        "reanalysis",
+        "evidence_added",
+        "comment_added"
+      ],
+      "default": "comment_added"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low",
+        "RFI",
+        "Resolved",
+        "Info"
+      ],
+      "default": "Info"
+    },
+    "user": {
+      "type": "string"
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

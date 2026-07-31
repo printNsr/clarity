@@ -1,0 +1,62 @@
+{
+  "name": "EvidenceFact",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string"
+    },
+    "discipline": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "Stated",
+        "Inferred",
+        "Missing",
+        "Confirmed",
+        "Contradicted"
+      ],
+      "default": "Stated"
+    },
+    "fact_group": {
+      "type": "string"
+    },
+    "source_user": {
+      "type": "string"
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "source_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "element": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "issue_id",
+    "text"
+  ]
+}

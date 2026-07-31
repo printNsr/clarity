@@ -1,0 +1,48 @@
+{
+  "name": "Drawing",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "drawing_number": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "discipline": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "issued_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "For Review",
+        "Issued",
+        "Superseded",
+        "Update Requested",
+        "In Progress",
+        "Updated",
+        "Verified"
+      ],
+      "default": "Issued"
+    }
+  },
+  "required": [
+    "drawing_number"
+  ]
+}

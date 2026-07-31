@@ -1,0 +1,40 @@
+{
+  "name": "DiscussionMessage",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "discipline": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "audio",
+        "document"
+      ],
+      "default": "text"
+    },
+    "text": {
+      "type": "string"
+    },
+    "transcript": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "issue_id"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "name": "ChangeIssue",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "Design change",
+        "Site condition",
+        "Drawing discrepancy",
+        "Coordination issue",
+        "Client request",
+        "Compliance concern",
+        "Missing information",
+        "Other"
+      ],
+      "default": "Design change"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "owner_role": {
+      "type": "string"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "disciplines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_drawings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Potential Collision",
+        "Decision Recorded",
+        "RFI Sent",
+        "Drawing Updated",
+        "Verified",
+        "Invalidated",
+        "Closed",
+        "Archived"
+      ],
+      "default": "Open"
+    },
+    "collision_risk": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low",
+        "None"
+      ],
+      "default": "None"
+    },
+    "hotspot_x": {
+      "type": "number"
+    },
+    "hotspot_y": {
+      "type": "number"
+    },
+    "verified_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "auto_monitoring": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

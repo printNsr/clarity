@@ -1,0 +1,55 @@
+{
+  "name": "Decision",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "resolution": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "High"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Awaiting approval",
+        "Approved",
+        "Rejected",
+        "Implemented",
+        "Invalidated"
+      ],
+      "default": "Draft"
+    }
+  },
+  "required": [
+    "issue_id"
+  ]
+}
