@@ -15,7 +15,7 @@ export default function ClarityLayout() {
 
   const refresh = useCallback(async () => {
     const [ps, events] = await Promise.all([
-      base44.entities.Project.filter({ archived: false }, "-created_date"),
+      base44.entities.Project.filter({ archived: false, name: "Horizon Tower" }, "-created_date"),
       base44.entities.WorkflowEvent.list("-occurred_at", 5),
     ]);
     setProjects(ps);

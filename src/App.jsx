@@ -7,15 +7,10 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import Layout from '@/components/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
-import Inbox from '@/pages/Inbox';
-import ChangeDetail from '@/pages/ChangeDetail';
-import DecisionTimeline from '@/pages/DecisionTimeline';
-import TeamPortal from '@/pages/TeamPortal';
 import ClarityLayout from '@/components/clarity/ClarityLayout';
 import ClarityDashboard from '@/pages/ClarityDashboard';
 import ChangesListPage from '@/pages/ChangesListPage';
@@ -64,13 +59,8 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Inbox />} />
-          <Route path="/change/:id" element={<ChangeDetail />} />
-          <Route path="/timeline" element={<DecisionTimeline />} />
-          <Route path="/portal" element={<TeamPortal />} />
-        </Route>
         <Route element={<ClarityLayout />}>
+          <Route path="/" element={<ClarityDashboard />} />
           <Route path="/dashboard" element={<ClarityDashboard />} />
           <Route path="/changes" element={<ChangesListPage />} />
           <Route path="/collisions" element={<ChangesListPage collisionsOnly />} />
