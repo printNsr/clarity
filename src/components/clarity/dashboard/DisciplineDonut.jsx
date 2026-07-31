@@ -13,13 +13,17 @@ export default function DisciplineDonut({ issues }) {
 
   return (
     <RippleCard className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-      <h2 className="text-[14px] font-semibold">By Discipline</h2>
-      <div className="mt-2 flex items-center gap-3">
-        <div className="relative h-[150px] w-[150px] shrink-0">
+      <h2 className="text-[14px] font-semibold">Which trades are affected</h2>
+      <p className="mt-1 text-[11px] leading-relaxed text-[#6B7280]">
+        Every open change counted against the trades it touches. The number in the middle is the total number
+        of changes on this project.
+      </p>
+      <div className="mt-3 flex items-center justify-center gap-6">
+        <div className="relative h-[210px] w-[210px] shrink-0">
           {data.length ? (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={data} dataKey="value" innerRadius={48} outerRadius={70} paddingAngle={2} stroke="none">
+                <Pie data={data} dataKey="value" innerRadius={68} outerRadius={100} paddingAngle={2} stroke="none">
                   {data.map((d) => (
                     <Cell key={d.name} fill={disc(d.name).hex} />
                   ))}
@@ -30,7 +34,7 @@ export default function DisciplineDonut({ issues }) {
             <div className="flex h-full items-center justify-center rounded-full border border-dashed border-[#E5E7EB] text-[11px] text-[#6B7280]">No data</div>
           )}
           {data.length ? (
-            <span className="pointer-events-none absolute inset-0 flex items-center justify-center text-[24px] font-semibold">{total}</span>
+            <span className="pointer-events-none absolute inset-0 flex items-center justify-center text-[34px] font-semibold">{total}</span>
           ) : null}
         </div>
         <ul className="space-y-1.5 text-[12px]">

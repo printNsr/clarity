@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HotspotScene3D from "./HotspotScene3D";
-import { roomForIndex } from "./houseLayout";
+import { roomForIndex, roomsForFloor } from "./houseLayout";
 import RippleCard from "../RippleCard";
 
 const SEV = { High: { fill: "#EF4444", r: 11 }, Medium: { fill: "#F59E0B", r: 8.5 }, Low: { fill: "#FDBA74", r: 6 } };
@@ -21,12 +21,14 @@ export default function HotspotsCard({ issues }) {
 
   const [floor, setFloor] = useState(null);
   const active = floor && floors.includes(floor) ? floor : floors[0];
+  const floorIndex = Math.max(0, floors.indexOf(active));
+  const rooms = roomsForFloor(floorIndex);
 
   const spots = collisions
     .filter((i) => (i.level || floors[0]) === active)
     .slice(0, 7)
     .map((i, idx) => {
-      const room = roomForIndex(idx);
+      const room = roomForIndex(rooms, idx, floorIndex);
       return {
         issue: i,
         px: room.x + room.w / 2,
@@ -52,6 +54,7 @@ export default function HotspotsCard({ issues }) {
       <div className="mt-2">
         <HotspotScene3D
           spots={spots}
+          rooms={rooms}
           floors={floors}
           floor={active}
           onSelectFloor={setFloor}

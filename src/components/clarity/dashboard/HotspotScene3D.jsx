@@ -1,11 +1,11 @@
 import React, { useMemo, useRef, useState } from "react";
 import { RotateCw } from "lucide-react";
-import { PLOT_X, PLOT_Z, WALL_H, ROOMS } from "./houseLayout";
+import { PLOT_X, PLOT_Z, WALL_H } from "./houseLayout";
 
 const W = 640, H = 300;
 
 /** Hand rolled 3D house view. Drag to spin a full 360 degrees, pick a floor, hover a marker for details. */
-export default function HotspotScene3D({ spots, floors, floor, onSelectFloor, onOpen }) {
+export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFloor, onOpen }) {
   const [view, setView] = useState({ yaw: 0.6, pitch: 0.9 });
   const [hover, setHover] = useState(null);
   const drag = useRef(null);
@@ -26,7 +26,7 @@ export default function HotspotScene3D({ spots, floors, floor, onSelectFloor, on
 
   const faces = useMemo(() => {
     const out = [];
-    ROOMS.forEach((r) => {
+    rooms.forEach((r) => {
       out.push({
         kind: "floor",
         pts: [[r.x, 0, r.z], [r.x + r.w, 0, r.z], [r.x + r.w, 0, r.z + r.d], [r.x, 0, r.z + r.d]],
@@ -57,7 +57,7 @@ export default function HotspotScene3D({ spots, floors, floor, onSelectFloor, on
       });
     });
     return out;
-  }, []);
+  }, [rooms]);
 
   const drawn = faces
     .map((f) => ({ ...f, order: f.pts.map(project).reduce((s, p) => s + p.depth, 0) / f.pts.length }))
@@ -108,7 +108,7 @@ export default function HotspotScene3D({ spots, floors, floor, onSelectFloor, on
             strokeWidth="1"
           />
         ))}
-        {ROOMS.map((r) => {
+        {rooms.map((r) => {
           const c = project([r.x + r.w / 2, 0, r.z + r.d / 2]);
           return (
             <text key={r.name} x={c.sx} y={c.sy} textAnchor="middle" fontSize="9" fill="#6B7280">
