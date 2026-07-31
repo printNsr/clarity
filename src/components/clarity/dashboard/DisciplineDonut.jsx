@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { DISCIPLINE_NAMES, disc } from "../disciplines";
+import RippleCard from "../RippleCard";
 
 export default function DisciplineDonut({ issues }) {
   const data = DISCIPLINE_NAMES.map((name) => ({
@@ -11,7 +12,7 @@ export default function DisciplineDonut({ issues }) {
   const total = issues.length;
 
   return (
-    <div className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+    <RippleCard className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
       <h2 className="text-[14px] font-semibold">By Discipline</h2>
       <div className="mt-2 flex items-center gap-3">
         <div className="relative h-[150px] w-[150px] shrink-0">
@@ -41,6 +42,6 @@ export default function DisciplineDonut({ issues }) {
           ))}
         </ul>
       </div>
-    </div>
+    </RippleCard>
   );
 }

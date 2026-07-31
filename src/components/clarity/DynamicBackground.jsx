@@ -3,6 +3,13 @@ import React, { useEffect, useState } from "react";
 // Fixed background layer whose yellow and black tones blend and shift as you scroll.
 export default function DynamicBackground() {
   const [p, setP] = useState(0);
+  const [cursor, setCursor] = useState({ x: 0.5, y: 0.35 });
+
+  useEffect(() => {
+    const onMove = (e) => setCursor({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -41,6 +48,15 @@ export default function DynamicBackground() {
         style={{
           opacity: 0.08 + p * 0.2,
           background: "linear-gradient(to top, hsl(var(--foreground) / 0.85), transparent)",
+        }}
+      />
+      <div
+        className="absolute h-[62vh] w-[62vh] rounded-full blur-[110px]"
+        style={{
+          left: `calc(${cursor.x * 100}% - 31vh)`,
+          top: `calc(${cursor.y * 100}% - 31vh)`,
+          background: "radial-gradient(circle, hsl(var(--accent) / 0.4), transparent 65%)",
+          transition: "left 180ms ease-out, top 180ms ease-out",
         }}
       />
       <div

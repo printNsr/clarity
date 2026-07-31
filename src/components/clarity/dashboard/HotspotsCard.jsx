@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FloorPlan from "../FloorPlan";
+import RippleCard from "../RippleCard";
 
 const SEV = { High: { fill: "#EF4444", r: 26 }, Medium: { fill: "#F59E0B", r: 20 }, Low: { fill: "#F59E0B", r: 13 } };
 
@@ -13,13 +14,14 @@ export default function HotspotsCard({ issues }) {
     .slice(0, 6)
     .map((i, idx) => ({
       issue: i,
-      x: i.hotspot_x ?? 70 + ((idx * 61) % 280),
-      y: i.hotspot_y ?? 70 + ((idx * 47) % 120),
+      // Values of 1 or less are stored as a fraction of the plan, anything larger is already a plan coordinate.
+      x: i.hotspot_x == null ? 70 + ((idx * 61) % 280) : i.hotspot_x <= 1 ? 30 + i.hotspot_x * 340 : i.hotspot_x,
+      y: i.hotspot_y == null ? 70 + ((idx * 47) % 120) : i.hotspot_y <= 1 ? 30 + i.hotspot_y * 180 : i.hotspot_y,
       sev: SEV[i.collision_risk] || SEV.Low,
     }));
 
   return (
-    <div className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+    <RippleCard className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
       <div className="flex items-center justify-between">
         <h2 className="text-[14px] font-semibold">Collision Hotspots</h2>
         <div className="flex items-center gap-3 text-[11px] text-[#6B7280]">
@@ -61,7 +63,7 @@ export default function HotspotsCard({ issues }) {
           <p className="absolute inset-x-0 bottom-2 text-center text-[12px] text-[#6B7280]">No collisions detected yet.</p>
         ) : null}
       </div>
-    </div>
+    </RippleCard>
   );
 }
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TriangleAlert, CircleCheck, Send, Activity } from "lucide-react";
 import StatusBadge from "../StatusBadge";
 import { fmtAgo } from "../clarityApi";
+import RippleCard from "../RippleCard";
 
 const ICONS = {
   collision_detected: { Icon: TriangleAlert, color: "text-[#EF4444]" },
@@ -14,7 +15,7 @@ const ICONS = {
 export default function RecentActivity({ events }) {
   const navigate = useNavigate();
   return (
-    <div className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+    <RippleCard className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
       <h2 className="text-[14px] font-semibold">Recent Activity</h2>
       <div className="mt-2 divide-y divide-[#F1F5F9]">
         {events.length === 0 ? (
@@ -40,6 +41,6 @@ export default function RecentActivity({ events }) {
           })
         )}
       </div>
-    </div>
+    </RippleCard>
   );
 }
