@@ -31,7 +31,6 @@ import DrawingUpdatePage from '@/pages/DrawingUpdatePage';
 import ClaritySettingsPage from '@/pages/ClaritySettingsPage';
 import UpdatesPage from '@/pages/UpdatesPage';
 import DesignChangeIssuePage from '@/pages/DesignChangeIssuePage';
-import GuidePage from '@/pages/GuidePage';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -87,7 +86,6 @@ const AuthenticatedApp = () => {
           <Route path="/updates" element={<UpdatesPage />} />
           <Route path="/design-change" element={<DesignChangeIssuePage />} />
           <Route path="/design-change/:issueId" element={<DesignChangeIssuePage />} />
-          <Route path="/guide" element={<GuidePage />} />
           <Route path="/settings" element={<ClaritySettingsPage />} />
         </Route>
       </Route>
