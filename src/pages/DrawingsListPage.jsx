@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Plus } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Plus, Layers } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { useClarity } from "@/components/clarity/ClarityLayout";
-import StatusBadge from "@/components/clarity/StatusBadge";
+import DrawingCard from "@/components/clarity/drawings/DrawingCard";
 import DisciplineIcon from "@/components/clarity/DisciplineIcon";
+import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { DISCIPLINE_NAMES } from "@/components/clarity/disciplines";
@@ -14,6 +14,7 @@ export default function DrawingsListPage() {
   const [drawings, setDrawings] = useState([]);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ drawing_number: "", title: "", discipline: "Electrical", revision: "A" });
+  const [trade, setTrade] = useState("All");
 
   const load = useCallback(async () => {
     if (!project) return;
@@ -21,6 +22,11 @@ export default function DrawingsListPage() {
   }, [project]);
 
   useEffect(() => { load(); }, [load]);
+
+  const shown = useMemo(
+    () => (trade === "All" ? drawings : drawings.filter((d) => d.discipline === trade)),
+    [drawings, trade]
+  );
 
   const save = async () => {
     if (!form.drawing_number.trim()) return;
@@ -31,9 +37,12 @@ export default function DrawingsListPage() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-[22px] font-semibold">Drawings</h1>
+        <div>
+          <h1 className="text-[22px] font-semibold tracking-tight">Drawings</h1>
+          <p className="text-[12px] text-[#6B7280]">{drawings.length} sheets on this project.</p>
+        </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger className="inline-flex h-9 items-center gap-1.5 rounded-md bg-[#2563EB] px-3 text-[12px] font-medium text-white">
             <Plus className="h-3.5 w-3.5" /> Add Drawing
@@ -55,21 +64,36 @@ export default function DrawingsListPage() {
         </Dialog>
       </div>
 
-      {drawings.length === 0 ? (
-        <p className="rounded-[10px] border border-dashed border-[#E5E7EB] bg-white p-10 text-center text-[12px] text-[#6B7280]">
-          No drawings have been uploaded.
-        </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          onClick={() => setTrade("All")}
+          className={cn("h-8 rounded-full border px-3 text-[12px] transition-colors", trade === "All" ? "border-[#2563EB] bg-[#EFF6FF] text-[#2563EB]" : "border-[#E5E7EB] bg-white text-[#6B7280] hover:bg-[#F8FAFC]")}
+        >
+          All ({drawings.length})
+        </button>
+        {DISCIPLINE_NAMES.map((d) => {
+          const count = drawings.filter((x) => x.discipline === d).length;
+          return (
+            <button
+              key={d}
+              onClick={() => setTrade(trade === d ? "All" : d)}
+              className={cn("inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[12px] transition-colors", trade === d ? "border-[#2563EB] bg-[#EFF6FF]" : "border-[#E5E7EB] bg-white text-[#6B7280] hover:bg-[#F8FAFC]")}
+            >
+              <DisciplineIcon name={d} size="sm" /> {d} ({count})
+            </button>
+          );
+        })}
+      </div>
+
+      {shown.length === 0 ? (
+        <div className="rounded-[14px] border border-dashed border-[#E5E7EB] bg-white p-14 text-center">
+          <Layers className="mx-auto h-6 w-6 text-[#CBD5E1]" />
+          <p className="mt-2 text-[13px] font-medium">No drawings here yet</p>
+          <p className="text-[12px] text-[#6B7280]">Add a sheet to start tracking revisions.</p>
+        </div>
       ) : (
-        <div className="divide-y divide-[#F1F5F9] rounded-[10px] border border-[#E5E7EB] bg-white">
-          {drawings.map((d) => (
-            <Link key={d.id} to={`/drawings/${d.id}/update`} className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8FAFC]">
-              <DisciplineIcon name={d.discipline} size="sm" />
-              <span className="text-[13px] font-medium">{d.drawing_number}</span>
-              <span className="min-w-0 flex-1 truncate text-[13px] text-[#6B7280]">{d.title}</span>
-              <span className="text-[11px] text-[#6B7280]">Rev {d.revision}</span>
-              <StatusBadge>{d.status}</StatusBadge>
-            </Link>
-          ))}
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {shown.map((d) => <DrawingCard key={d.id} drawing={d} />)}
         </div>
       )}
     </div>
