@@ -38,7 +38,7 @@ export default function ChatBubble() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-5 right-5 z-40 inline-flex h-12 items-center gap-2 rounded-full bg-[#2563EB] px-4 text-[12px] font-medium text-white shadow-lg hover:bg-[#1D4ED8]"
+        className="fixed bottom-5 right-5 z-40 inline-flex h-12 items-center gap-2 rounded-full bg-[#7C3AED] px-4 text-[12px] font-medium text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[#6D28D9] hover:shadow-xl hover:shadow-[#7C3AED]/40"
       >
         <MessageSquare className="h-4 w-4" /> Ask Clarity
       </button>
@@ -96,7 +96,7 @@ export default function ChatBubble() {
           placeholder="Ask about anything in the business"
           className="h-9 min-w-0 flex-1 rounded-md border border-[#E5E7EB] bg-white px-2.5 text-[12px] outline-none focus:border-[#2563EB]"
         />
-        <button type="submit" disabled={busy || !text.trim()} className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[#2563EB] text-white disabled:opacity-50">
+        <button type="submit" disabled={busy || !text.trim()} className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[#7C3AED] text-white transition-all duration-200 hover:bg-[#6D28D9] hover:shadow-md hover:shadow-[#7C3AED]/30 disabled:opacity-50">
           <Send className="h-3.5 w-3.5" />
         </button>
       </form>

@@ -35,7 +35,7 @@ export default function MediatorCard({ issue }) {
       <button
         onClick={run}
         disabled={busy}
-        className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-md border border-[#7C3AED] text-[12px] font-medium text-[#7C3AED] hover:bg-[#F5F3FF] disabled:opacity-70"
+        className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-md border border-[#7C3AED] text-[12px] font-medium text-[#7C3AED] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#7C3AED] hover:text-white hover:shadow-md hover:shadow-[#7C3AED]/30 disabled:opacity-70"
       >
         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
         {busy ? "Reading the discussion" : result ? "Run mediator again" : "Run mediator"}

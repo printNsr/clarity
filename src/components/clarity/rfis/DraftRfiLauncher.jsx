@@ -36,7 +36,7 @@ export default function DraftRfiLauncher() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex h-9 items-center gap-2 rounded-md border border-[#2563EB] px-3 text-[12px] font-medium text-[#2563EB] hover:bg-[#EFF6FF]"
+        className="inline-flex h-9 items-center gap-2 rounded-md border border-[#7C3AED] px-3 text-[12px] font-medium text-[#7C3AED] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#7C3AED] hover:text-white hover:shadow-md hover:shadow-[#7C3AED]/30"
       >
         <Sparkles className="h-3.5 w-3.5" /> Draft RFI with AI
       </button>
@@ -63,7 +63,7 @@ export default function DraftRfiLauncher() {
                 >
                   <span className="min-w-0 flex-1 truncate text-[13px]">{i.title}</span>
                   <span className="text-[11px] text-[#6B7280]">{[i.level, i.zone].filter(Boolean).join(", ")}</span>
-                  {busyId === i.id ? <Loader2 className="h-3.5 w-3.5 animate-spin text-[#2563EB]" /> : null}
+                  {busyId === i.id ? <Loader2 className="h-3.5 w-3.5 animate-spin text-[#7C3AED]" /> : null}
                 </button>
               ))
             )}
