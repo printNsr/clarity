@@ -23,6 +23,7 @@ import RfiListPage from '@/pages/RfiListPage';
 import RfiPage from '@/pages/RfiPage';
 import DrawingsListPage from '@/pages/DrawingsListPage';
 import DrawingUpdatePage from '@/pages/DrawingUpdatePage';
+import PlanAnalyzerPage from '@/pages/PlanAnalyzerPage';
 import ClaritySettingsPage from '@/pages/ClaritySettingsPage';
 import UpdatesPage from '@/pages/UpdatesPage';
 import DesignChangeIssuePage from '@/pages/DesignChangeIssuePage';
@@ -72,6 +73,7 @@ const AuthenticatedApp = () => {
           <Route path="/rfis" element={<RfiListPage />} />
           <Route path="/rfis/:rfiId" element={<RfiPage />} />
           <Route path="/drawings" element={<DrawingsListPage />} />
+          <Route path="/drawings/analyzer" element={<PlanAnalyzerPage />} />
           <Route path="/drawings/:drawingId/update" element={<DrawingUpdatePage />} />
           <Route path="/updates" element={<UpdatesPage />} />
           <Route path="/design-change" element={<DesignChangeIssuePage />} />

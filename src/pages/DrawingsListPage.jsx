@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Plus, Layers } from "lucide-react";
+import { Plus, Layers, ScanLine } from "lucide-react";
+import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { useClarity } from "@/components/clarity/ClarityLayout";
 import DrawingCard from "@/components/clarity/drawings/DrawingCard";
@@ -38,30 +39,35 @@ export default function DrawingsListPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-[22px] font-semibold tracking-tight">Drawings</h1>
           <p className="text-[12px] text-[#6B7280]">{drawings.length} sheets on this project.</p>
         </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger className="inline-flex h-9 items-center gap-1.5 rounded-md bg-[#2563EB] px-3 text-[12px] font-medium text-white">
-            <Plus className="h-3.5 w-3.5" /> Add Drawing
-          </DialogTrigger>
-          <DialogContent className="max-w-md">
-            <DialogHeader><DialogTitle className="text-[15px]">Add drawing</DialogTitle></DialogHeader>
-            <div className="space-y-3">
-              <Input value={form.drawing_number} onChange={(e) => setForm({ ...form, drawing_number: e.target.value })} placeholder="Drawing number" className="h-9 text-[13px]" />
-              <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Title" className="h-9 text-[13px]" />
-              <div className="grid grid-cols-2 gap-3">
-                <select value={form.discipline} onChange={(e) => setForm({ ...form, discipline: e.target.value })} className="h-9 rounded-md border border-[#E5E7EB] px-2 text-[13px]">
-                  {DISCIPLINE_NAMES.map((d) => <option key={d}>{d}</option>)}
-                </select>
-                <Input value={form.revision} onChange={(e) => setForm({ ...form, revision: e.target.value })} placeholder="Revision" className="h-9 text-[13px]" />
+        <div className="flex items-center gap-2">
+          <Link to="/drawings/analyzer" className="inline-flex h-9 items-center gap-1.5 rounded-md border border-[#E5E7EB] bg-white px-3 text-[12px] font-medium">
+            <ScanLine className="h-3.5 w-3.5" /> Plan Analyzer
+          </Link>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger className="inline-flex h-9 items-center gap-1.5 rounded-md bg-[#2563EB] px-3 text-[12px] font-medium text-white">
+              <Plus className="h-3.5 w-3.5" /> Add Drawing
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader><DialogTitle className="text-[15px]">Add drawing</DialogTitle></DialogHeader>
+              <div className="space-y-3">
+                <Input value={form.drawing_number} onChange={(e) => setForm({ ...form, drawing_number: e.target.value })} placeholder="Drawing number" className="h-9 text-[13px]" />
+                <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Title" className="h-9 text-[13px]" />
+                <div className="grid grid-cols-2 gap-3">
+                  <select value={form.discipline} onChange={(e) => setForm({ ...form, discipline: e.target.value })} className="h-9 rounded-md border border-[#E5E7EB] px-2 text-[13px]">
+                    {DISCIPLINE_NAMES.map((d) => <option key={d}>{d}</option>)}
+                  </select>
+                  <Input value={form.revision} onChange={(e) => setForm({ ...form, revision: e.target.value })} placeholder="Revision" className="h-9 text-[13px]" />
+                </div>
+                <button onClick={save} className="h-9 w-full rounded-md bg-[#2563EB] text-[12px] font-medium text-white">Save drawing</button>
               </div>
-              <button onClick={save} className="h-9 w-full rounded-md bg-[#2563EB] text-[12px] font-medium text-white">Save drawing</button>
-            </div>
-          </DialogContent>
-        </Dialog>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
