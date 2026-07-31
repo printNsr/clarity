@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HotspotScene3D from "./HotspotScene3D";
+import { roomForIndex } from "./houseLayout";
 import RippleCard from "../RippleCard";
 
 const SEV = { High: { fill: "#EF4444", r: 11 }, Medium: { fill: "#F59E0B", r: 8.5 }, Low: { fill: "#FDBA74", r: 6 } };
@@ -8,17 +9,28 @@ const SEV = { High: { fill: "#EF4444", r: 11 }, Medium: { fill: "#F59E0B", r: 8.
 export default function HotspotsCard({ issues }) {
   const navigate = useNavigate();
 
-  const spots = issues
-    .filter((i) => i.collision_risk && i.collision_risk !== "None")
-    .slice(0, 6)
+  const collisions = useMemo(
+    () => issues.filter((i) => i.collision_risk && i.collision_risk !== "None"),
+    [issues]
+  );
+
+  const floors = useMemo(() => {
+    const found = [...new Set(collisions.map((i) => i.level).filter(Boolean))].sort();
+    return found.length ? found : ["Ground floor"];
+  }, [collisions]);
+
+  const [floor, setFloor] = useState(null);
+  const active = floor && floors.includes(floor) ? floor : floors[0];
+
+  const spots = collisions
+    .filter((i) => (i.level || floors[0]) === active)
+    .slice(0, 7)
     .map((i, idx) => {
-      // Values of 1 or less are stored as a fraction of the plan, anything larger is a plan coordinate.
-      const fx = i.hotspot_x == null ? ((idx * 61) % 280) / 280 : i.hotspot_x <= 1 ? i.hotspot_x : Math.min(i.hotspot_x / 400, 1);
-      const fz = i.hotspot_y == null ? ((idx * 47) % 120) / 120 : i.hotspot_y <= 1 ? i.hotspot_y : Math.min(i.hotspot_y / 240, 1);
+      const room = roomForIndex(idx);
       return {
         issue: i,
-        px: 4 + fx * 32,
-        pz: 4 + fz * 16,
+        px: room.x + room.w / 2,
+        pz: room.z + room.d / 2,
         sev: SEV[i.collision_risk] || SEV.Low,
       };
     });
@@ -34,11 +46,17 @@ export default function HotspotsCard({ issues }) {
         </div>
       </div>
       <p className="mt-1 text-[11px] leading-relaxed text-[#6B7280]">
-        A 3D view of the building. Each marker sits where two or more trades clash. Bigger and redder
-        means higher risk. Drag to spin the view all the way around and click a marker to open the change.
+        A 3D model of the building with its rooms. Pick a floor on the left, drag to spin the view all the
+        way around, hover a marker to read what clashes there and click it to open the change.
       </p>
       <div className="mt-2">
-        <HotspotScene3D spots={spots} onOpen={(issue) => navigate(`/changes/${issue.id}`)} />
+        <HotspotScene3D
+          spots={spots}
+          floors={floors}
+          floor={active}
+          onSelectFloor={setFloor}
+          onOpen={(issue) => navigate(`/changes/${issue.id}`)}
+        />
       </div>
     </RippleCard>
   );

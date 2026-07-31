@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(() => localStorage.getItem("clarity-theme") === "dark");
+  // Dark is the default; light stays available and is remembered once chosen.
+  const [dark, setDark] = useState(() => localStorage.getItem("clarity-theme") !== "light");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
