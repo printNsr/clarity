@@ -28,6 +28,10 @@ export default function HotspotsCard({ issues }) {
           <Legend color="#FDBA74" label="Low" />
         </div>
       </div>
+      <p className="mt-1 text-[11px] leading-relaxed text-[#6B7280]">
+        A simple floor plan of the building. Each circle marks a spot on the plan where two or more
+        trades clash. Bigger and redder means higher risk. Click a circle to open the change.
+      </p>
       <div className="relative mt-2">
         <FloorPlan height={220}>
           {spots.map((s) => (
