@@ -89,13 +89,14 @@ export default function PlanModel3D({ plan }) {
     e.currentTarget.setPointerCapture?.(e.pointerId);
   };
   const onMove = (e) => {
-    if (!drag.current) return;
-    const dx = e.clientX - drag.current.x;
-    const dy = e.clientY - drag.current.y;
+    const start = drag.current;
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
     setView((v) => ({
       ...v,
-      yaw: drag.current.yaw + dx * 0.008,
-      pitch: Math.min(Math.max(drag.current.pitch - dy * 0.006, 0.15), 1.45),
+      yaw: start.yaw + dx * 0.008,
+      pitch: Math.min(Math.max(start.pitch - dy * 0.006, 0.15), 1.45),
     }));
   };
   const onUp = () => { drag.current = null; };
