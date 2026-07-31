@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 const links = [
   { to: "/", label: "Inbox", end: true },
   { to: "/timeline", label: "Decision Timeline" },
-  { to: "/graph", label: "Impact Graph" },
   { to: "/portal", label: "Team Portal" },
 ];
 

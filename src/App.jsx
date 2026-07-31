@@ -15,7 +15,6 @@ import ResetPassword from '@/pages/ResetPassword';
 import Inbox from '@/pages/Inbox';
 import ChangeDetail from '@/pages/ChangeDetail';
 import DecisionTimeline from '@/pages/DecisionTimeline';
-import ImpactGraph from '@/pages/ImpactGraph';
 import TeamPortal from '@/pages/TeamPortal';
 import { Navigate } from 'react-router-dom';
 
@@ -54,7 +53,6 @@ const AuthenticatedApp = () => {
           <Route path="/" element={<Inbox />} />
           <Route path="/change/:id" element={<ChangeDetail />} />
           <Route path="/timeline" element={<DecisionTimeline />} />
-          <Route path="/graph" element={<ImpactGraph />} />
           <Route path="/portal" element={<TeamPortal />} />
         </Route>
       </Route>
