@@ -84,7 +84,7 @@ export default function PlanUpload({ onResult }) {
     >
       {busy ? (
         <>
-          <Loader2 className="mx-auto h-6 w-6 animate-spin text-[#2563EB]" />
+          <Loader2 className="mx-auto h-6 w-6 animate-spin text-[#7C3AED]" />
           <p className="mt-2 text-[13px] font-medium">Reading {fileName}</p>
           <p className="text-[12px] text-[#6B7280]">Finding the text and working out the rooms. This takes a moment.</p>
         </>
@@ -95,7 +95,7 @@ export default function PlanUpload({ onResult }) {
           <p className="text-[12px] text-[#6B7280]">Photos of hand drawn plans, images or PDFs all work.</p>
           <button
             onClick={() => inputRef.current?.click()}
-            className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-md bg-[#2563EB] px-3 text-[12px] font-medium text-white"
+            className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-md bg-[#7C3AED] px-3 text-[12px] font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#6D28D9] hover:shadow-md hover:shadow-[#7C3AED]/30"
           >
             <FileText className="h-3.5 w-3.5" /> Choose file
           </button>

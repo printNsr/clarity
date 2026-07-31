@@ -45,7 +45,7 @@ export default function DrawingsListPage() {
           <p className="text-[12px] text-[#6B7280]">{drawings.length} sheets on this project.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link to="/drawings/analyzer" className="inline-flex h-9 items-center gap-1.5 rounded-md border border-[#E5E7EB] bg-white px-3 text-[12px] font-medium">
+          <Link to="/drawings/analyzer" className="inline-flex h-9 items-center gap-1.5 rounded-md border border-[#7C3AED] bg-white px-3 text-[12px] font-medium text-[#7C3AED] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#7C3AED] hover:text-white hover:shadow-md hover:shadow-[#7C3AED]/30">
             <ScanLine className="h-3.5 w-3.5" /> Plan Analyzer
           </Link>
           <Dialog open={open} onOpenChange={setOpen}>
