@@ -1,13 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import ChangeCard from "@/components/inbox/ChangeCard";
 import FlaggedPanel from "@/components/inbox/FlaggedPanel";
 import NewChangeDialog from "@/components/inbox/NewChangeDialog";
+import GroupSelect from "@/components/inbox/GroupSelect";
+import ChangeGroup from "@/components/inbox/ChangeGroup";
+import { groupChanges } from "@/components/inbox/groupChanges";
 
 export default function Inbox() {
   const [changes, setChanges] = useState([]);
   const [flagged, setFlagged] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [groupBy, setGroupBy] = useState("urgency");
+
+  const groups = useMemo(() => groupChanges(changes, groupBy), [changes, groupBy]);
 
   const load = useCallback(async () => {
     const [c, m] = await Promise.all([
@@ -35,6 +40,8 @@ export default function Inbox() {
 
       <FlaggedPanel messages={flagged} />
 
+      <GroupSelect value={groupBy} onChange={setGroupBy} />
+
       {loading ? (
         <p className="text-sm text-muted-foreground">Loading changes</p>
       ) : changes.length === 0 ? (
@@ -42,9 +49,9 @@ export default function Inbox() {
           No changes yet. Paste a note to add the first one.
         </div>
       ) : (
-        <div className="space-y-4">
-          {changes.map((c) => (
-            <ChangeCard key={c.id} change={c} />
+        <div className="space-y-10">
+          {groups.map((g) => (
+            <ChangeGroup key={g.label || "all"} label={g.label} changes={g.changes} />
           ))}
         </div>
       )}

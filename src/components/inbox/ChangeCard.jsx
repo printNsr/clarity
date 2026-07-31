@@ -7,7 +7,7 @@ export default function ChangeCard({ change }) {
   return (
     <Link
       to={`/change/${change.id}`}
-      className="block rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+      className="block rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-6">
         <div className="min-w-0">
