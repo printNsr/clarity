@@ -1,0 +1,37 @@
+{
+  "name": "Conflict",
+  "type": "object",
+  "properties": {
+    "change_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "open_question": {
+      "type": "string"
+    },
+    "disciplines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resolved": {
+      "type": "boolean",
+      "default": false
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    }
+  },
+  "required": [
+    "change_id"
+  ]
+}

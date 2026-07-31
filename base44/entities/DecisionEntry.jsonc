@@ -1,0 +1,90 @@
+{
+  "name": "DecisionEntry",
+  "type": "object",
+  "properties": {
+    "change_id": {
+      "type": "string"
+    },
+    "change_title": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "resolver": {
+      "type": "string"
+    },
+    "resolver_role": {
+      "type": "string"
+    },
+    "disciplines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decision_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "conflict_id": {
+      "type": "string"
+    },
+    "conflict_text": {
+      "type": "string"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "rejected_reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "chosen_option": {
+      "type": "string"
+    },
+    "chosen_reason": {
+      "type": "string"
+    },
+    "jira_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string",
+            "enum": [
+              "Caused this",
+              "Affected by this",
+              "Resolves this",
+              "Blocks this",
+              "Duplicates this"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

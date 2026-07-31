@@ -1,0 +1,43 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string"
+    },
+    "change_id": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "parent_id": {
+      "type": "string"
+    },
+    "reactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "emoji": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "flagged": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "channel",
+    "text"
+  ]
+}

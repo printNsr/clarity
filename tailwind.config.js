@@ -40,6 +40,14 @@ module.exports = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+  			risk: {
+  				high: 'hsl(var(--risk-high))',
+  				med: 'hsl(var(--risk-med))',
+  				low: 'hsl(var(--risk-low))',
+  				'high-soft': 'hsl(var(--risk-high-soft))',
+  				'med-soft': 'hsl(var(--risk-med-soft))',
+  				'low-soft': 'hsl(var(--risk-low-soft))'
+  			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

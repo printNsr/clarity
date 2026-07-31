@@ -1,0 +1,81 @@
+{
+  "name": "DisciplineImpact",
+  "type": "object",
+  "properties": {
+    "change_id": {
+      "type": "string"
+    },
+    "discipline": {
+      "type": "string",
+      "enum": [
+        "Mechanical",
+        "Electrical",
+        "Fire",
+        "QS",
+        "Architecture",
+        "Structural",
+        "PM"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "high",
+        "med",
+        "low"
+      ],
+      "default": "med"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string"
+          },
+          "after": {
+            "type": "string"
+          },
+          "change": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "team_what": {
+      "type": "string"
+    },
+    "team_means": {
+      "type": "string"
+    },
+    "team_todo": {
+      "type": "string"
+    },
+    "source_ref": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "change_id",
+    "discipline"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "JiraItem",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "task",
+        "bug",
+        "story",
+        "epic"
+      ],
+      "default": "task"
+    }
+  },
+  "required": [
+    "key"
+  ]
+}

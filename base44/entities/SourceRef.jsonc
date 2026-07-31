@@ -1,0 +1,33 @@
+{
+  "name": "SourceRef",
+  "type": "object",
+  "properties": {
+    "change_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "ref": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "document",
+        "drawing",
+        "jira",
+        "email",
+        "model"
+      ],
+      "default": "document"
+    }
+  },
+  "required": [
+    "change_id",
+    "title"
+  ]
+}

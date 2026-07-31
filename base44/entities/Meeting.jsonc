@@ -1,0 +1,74 @@
+{
+  "name": "Meeting",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "change_id": {
+      "type": "string"
+    },
+    "datetime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "live",
+        "completed"
+      ],
+      "default": "scheduled"
+    },
+    "recording_url": {
+      "type": "string"
+    },
+    "transcript": {
+      "type": "string"
+    },
+    "insights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "decision",
+              "risk",
+              "open question",
+              "action item"
+            ]
+          },
+          "change_id": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
