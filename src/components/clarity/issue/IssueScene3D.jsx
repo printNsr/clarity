@@ -28,6 +28,10 @@ export default function IssueScene3D({ issue }) {
       rooms={rooms}
       floors={[level]}
       floor={level}
+      height={380}
+      viewW={380}
+      viewH={380}
+      zoom={1.3}
       onSelectFloor={() => {}}
       onOpen={() => {}}
     />

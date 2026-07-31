@@ -3,19 +3,20 @@ import { RotateCw } from "lucide-react";
 import { PLOT_X, PLOT_Z, WALL_H } from "./houseLayout";
 import SvgTooltip from "./SvgTooltip";
 
-const W = 640, H = 300;
+const DEFAULT_W = 640, DEFAULT_H = 300;
 
 /** Hand rolled 3D house view. Drag to spin a full 360 degrees, pick a floor, hover a marker for details. */
-export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFloor, onOpen }) {
+export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFloor, onOpen, height = 300, zoom = 1, focus = null, viewW = DEFAULT_W, viewH = DEFAULT_H }) {
+  const W = viewW, H = viewH;
   const [view, setView] = useState({ yaw: 0.6, pitch: 0.9 });
   const [hover, setHover] = useState(null);
   const [hoverRoom, setHoverRoom] = useState(null);
   const drag = useRef(null);
-  const scale = 5;
+  const scale = 5 * zoom;
 
   const project = ([x, y, z]) => {
-    const dx = x - PLOT_X / 2;
-    const dz = z - PLOT_Z / 2;
+    const dx = x - (focus ? focus[0] : PLOT_X / 2);
+    const dz = z - (focus ? focus[1] : PLOT_Z / 2);
     const rx = dx * Math.cos(view.yaw) - dz * Math.sin(view.yaw);
     const rz = dx * Math.sin(view.yaw) + dz * Math.cos(view.yaw);
     return {
@@ -87,7 +88,8 @@ export default function HotspotScene3D({ spots, rooms, floors, floor, onSelectFl
     <div className="relative overflow-hidden rounded-[10px] border border-[#E5E7EB] bg-[#FAFAF7]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-[300px] w-full cursor-grab touch-none active:cursor-grabbing"
+        style={{ height }}
+        className="w-full cursor-grab touch-none active:cursor-grabbing"
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={onUp}

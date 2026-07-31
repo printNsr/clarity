@@ -51,7 +51,7 @@ export default function ChangeIssuePage() {
         <StatusBadge>{issue.status}</StatusBadge>
       </div>
 
-      <div className="grid gap-3 lg:grid-cols-[240px_1fr_300px]">
+      <div className="grid gap-3 lg:grid-cols-[220px_1fr_420px]">
         <IssueMeta issue={issue} />
         <DiscussionPanel issue={issue} messages={messages} onChange={load} />
         <InsightCard
