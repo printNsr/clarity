@@ -6,8 +6,6 @@ import IssueMeta from "@/components/clarity/issue/IssueMeta";
 import DiscussionPanel from "@/components/clarity/issue/DiscussionPanel";
 import InsightCard from "@/components/clarity/issue/InsightCard";
 import StatusBadge from "@/components/clarity/StatusBadge";
-import MediatorCard from "@/components/clarity/issue/MediatorCard";
-import DraftRfiCard from "@/components/clarity/issue/DraftRfiCard";
 import { runAnalysis } from "@/components/clarity/runAnalysis";
 
 export default function ChangeIssuePage() {
@@ -56,17 +54,13 @@ export default function ChangeIssuePage() {
       <div className="grid gap-3 lg:grid-cols-[220px_1fr_420px]">
         <IssueMeta issue={issue} />
         <DiscussionPanel issue={issue} messages={messages} onChange={load} />
-        <div className="space-y-3">
-          <InsightCard
-            issue={issue}
-            summary={analysis?.summary || issue.description || "Run an analysis to compare assumptions across disciplines."}
-            onAnalyze={analyze}
-            analyzing={analyzing}
-            statusText="Comparing assumptions across disciplines"
-          />
-          <MediatorCard issue={issue} />
-          <DraftRfiCard issue={issue} />
-        </div>
+        <InsightCard
+          issue={issue}
+          summary={analysis?.summary || issue.description || "Run an analysis to compare assumptions across disciplines."}
+          onAnalyze={analyze}
+          analyzing={analyzing}
+          statusText="Comparing assumptions across disciplines"
+        />
       </div>
     </div>
   );

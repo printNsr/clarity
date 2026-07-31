@@ -7,6 +7,7 @@ import ImpactPlan from "@/components/clarity/resolve/ImpactPlan";
 import PeopleChips from "@/components/clarity/resolve/PeopleChips";
 import { logEvent, nextRfiNumber } from "@/components/clarity/clarityApi";
 import { useToast } from "@/components/ui/use-toast";
+import MediatorCard from "@/components/clarity/issue/MediatorCard";
 
 export default function ResolvePage() {
   const { issueId } = useParams();
@@ -107,7 +108,10 @@ export default function ResolvePage() {
           <PeopleChips people={form.participants} onChange={(participants) => setForm({ ...form, participants })} />
           <DecisionForm form={form} onChange={setForm} onRecord={record} onSaveDraft={saveDraft} saving={saving} />
         </div>
-        <ImpactPlan elements={issue.elements || []} zone={issue.zone} />
+        <div className="space-y-3">
+          <MediatorCard issue={issue} />
+          <ImpactPlan elements={issue.elements || []} zone={issue.zone} />
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { useClarity } from "@/components/clarity/ClarityLayout";
 import StatusBadge from "@/components/clarity/StatusBadge";
 import { Input } from "@/components/ui/input";
 import { fmtDate } from "@/components/clarity/clarityApi";
+import DraftRfiLauncher from "@/components/clarity/rfis/DraftRfiLauncher";
 
 export default function RfiListPage() {
   const { project } = useClarity();
@@ -22,7 +23,10 @@ export default function RfiListPage() {
 
   return (
     <div className="space-y-3">
-      <h1 className="text-[22px] font-semibold">RFIs</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-[22px] font-semibold">RFIs</h1>
+        <DraftRfiLauncher />
+      </div>
       <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search RFIs" className="h-9 w-56 text-[12px]" />
       {shown.length === 0 ? (
         <p className="rounded-[10px] border border-dashed border-[#E5E7EB] bg-white p-10 text-center text-[12px] text-[#6B7280]">
