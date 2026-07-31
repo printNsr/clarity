@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
+import Logo from "@/components/clarity/Logo";
 
 export default function TopBar({ projects = [], project, onSelectProject, notifications = [], onToggleRail }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function TopBar({ projects = [], project, onSelectProject, notifi
   return (
     <header className="sticky top-0 z-30 flex h-[58px] items-center gap-3 border-b border-border bg-card/70 px-4 backdrop-blur-md">
       <div className="flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground">C</span>
+        <Logo className="h-8 w-8" />
         <span className="text-[15px] font-semibold text-foreground">Clarity</span>
       </div>
 
