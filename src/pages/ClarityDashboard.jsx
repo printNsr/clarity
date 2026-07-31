@@ -9,6 +9,7 @@ import RecentActivity from "@/components/clarity/dashboard/RecentActivity";
 import ActivityTimeline from "@/components/clarity/dashboard/ActivityTimeline";
 import NewChangeDialog from "@/components/clarity/changes/NewChangeDialog";
 import { loadSampleWorkspace } from "@/components/clarity/sampleWorkspace";
+import ChatBubble from "@/components/clarity/chat/ChatBubble";
 
 const OPEN_STATES = ["Open", "Potential Collision", "Decision Recorded", "RFI Sent", "Drawing Updated", "Invalidated"];
 
@@ -90,6 +91,8 @@ export default function ClarityDashboard() {
         <RecentActivity events={shownEvents.slice(0, 6)} />
         <ActivityTimeline events={events.slice(0, 6)} />
       </div>
+
+      <ChatBubble />
     </div>
   );
 }

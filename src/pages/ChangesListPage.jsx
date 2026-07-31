@@ -6,6 +6,7 @@ import { useClarity } from "@/components/clarity/ClarityLayout";
 import NewChangeDialog from "@/components/clarity/changes/NewChangeDialog";
 import StatusBadge from "@/components/clarity/StatusBadge";
 import DisciplineIcon from "@/components/clarity/DisciplineIcon";
+import MediatorDialog from "@/components/clarity/issue/MediatorDialog";
 import { Input } from "@/components/ui/input";
 import { fmtDate } from "@/components/clarity/clarityApi";
 
@@ -71,6 +72,7 @@ export default function ChangesListPage({ collisionsOnly = false }) {
               </div>
               <StatusBadge>{i.priority}</StatusBadge>
               <StatusBadge>{i.status}</StatusBadge>
+              {["Potential Collision", "Open"].includes(i.status) ? <MediatorDialog issue={i} /> : null}
               <button onClick={() => remove(i.id)} className="opacity-0 transition-opacity group-hover:opacity-100">
                 <Trash2 className="h-3.5 w-3.5 text-[#6B7280] hover:text-[#EF4444]" />
               </button>
