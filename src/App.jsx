@@ -29,6 +29,7 @@ import RfiPage from '@/pages/RfiPage';
 import DrawingsListPage from '@/pages/DrawingsListPage';
 import DrawingUpdatePage from '@/pages/DrawingUpdatePage';
 import ClaritySettingsPage from '@/pages/ClaritySettingsPage';
+import UpdatesPage from '@/pages/UpdatesPage';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -81,6 +82,7 @@ const AuthenticatedApp = () => {
           <Route path="/rfis/:rfiId" element={<RfiPage />} />
           <Route path="/drawings" element={<DrawingsListPage />} />
           <Route path="/drawings/:drawingId/update" element={<DrawingUpdatePage />} />
+          <Route path="/updates" element={<UpdatesPage />} />
           <Route path="/settings" element={<ClaritySettingsPage />} />
         </Route>
       </Route>

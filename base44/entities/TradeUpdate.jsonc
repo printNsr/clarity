@@ -1,0 +1,59 @@
+{
+  "name": "TradeUpdate",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "issue_id": {
+      "type": "string"
+    },
+    "discipline": {
+      "type": "string"
+    },
+    "rep_name": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "Progress update",
+        "Delay notice",
+        "Site condition",
+        "Material change",
+        "Question",
+        "Sign off"
+      ],
+      "default": "Progress update"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "default": false
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

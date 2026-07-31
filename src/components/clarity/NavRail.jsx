@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Home, GitPullRequestArrow, TriangleAlert, FileQuestion, Layers, Settings } from "lucide-react";
+import { Home, GitPullRequestArrow, TriangleAlert, FileQuestion, Layers, Bell, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
@@ -9,6 +9,7 @@ const ITEMS = [
   { to: "/collisions", icon: TriangleAlert, label: "Collisions" },
   { to: "/rfis", icon: FileQuestion, label: "RFIs" },
   { to: "/drawings", icon: Layers, label: "Drawings" },
+  { to: "/updates", icon: Bell, label: "Updates" },
   { to: "/settings", icon: Settings, label: "Settings" },
 ];
 
