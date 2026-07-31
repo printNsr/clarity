@@ -3,6 +3,7 @@ import { base44 } from "@/api/base44Client";
 import FlaggedPanel from "@/components/inbox/FlaggedPanel";
 import NewChangeDialog from "@/components/inbox/NewChangeDialog";
 import GroupSelect from "@/components/inbox/GroupSelect";
+import StatusFilter from "@/components/inbox/StatusFilter";
 import ChangeGroup from "@/components/inbox/ChangeGroup";
 import { groupChanges } from "@/components/inbox/groupChanges";
 
@@ -11,8 +12,24 @@ export default function Inbox() {
   const [flagged, setFlagged] = useState([]);
   const [loading, setLoading] = useState(true);
   const [groupBy, setGroupBy] = useState("urgency");
+  const [status, setStatus] = useState("all");
 
-  const groups = useMemo(() => groupChanges(changes, groupBy), [changes, groupBy]);
+  const counts = useMemo(
+    () => ({
+      all: changes.length,
+      draft: changes.filter((c) => c.status === "draft").length,
+      unresolved: changes.filter((c) => c.status === "unresolved").length,
+      resolved: changes.filter((c) => c.status === "resolved").length,
+    }),
+    [changes]
+  );
+
+  const visible = useMemo(
+    () => (status === "all" ? changes : changes.filter((c) => c.status === status)),
+    [changes, status]
+  );
+
+  const groups = useMemo(() => groupChanges(visible, groupBy), [visible, groupBy]);
 
   const load = useCallback(async () => {
     const [c, m] = await Promise.all([
@@ -40,13 +57,16 @@ export default function Inbox() {
 
       <FlaggedPanel messages={flagged} />
 
-      <GroupSelect value={groupBy} onChange={setGroupBy} />
+      <div className="space-y-3">
+        <StatusFilter value={status} onChange={setStatus} counts={counts} />
+        <GroupSelect value={groupBy} onChange={setGroupBy} />
+      </div>
 
       {loading ? (
         <p className="text-sm text-muted-foreground">Loading changes</p>
-      ) : changes.length === 0 ? (
+      ) : visible.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
-          No changes yet. Paste a note to add the first one.
+          {changes.length === 0 ? "No changes yet. Paste a note to add the first one." : "No changes with this status."}
         </div>
       ) : (
         <div className="space-y-10">
