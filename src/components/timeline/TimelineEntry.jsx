@@ -4,14 +4,21 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Pill from "@/components/common/Pill";
 import DecisionRecord from "./DecisionRecord";
+import { roleGroup, roleCard, roleDot, roleLabel } from "./roleTone";
 
 export default function TimelineEntry({ entry }) {
   const [open, setOpen] = useState(false);
+  const group = roleGroup(entry.resolver_role);
   return (
-    <div className="rounded-2xl border border-border bg-card p-6">
+    <div id={`entry-${entry.id}`} className={cn("rounded-2xl border p-6 scroll-mt-28", roleCard[group])}>
       <button className="flex w-full items-start justify-between gap-4 text-left" onClick={() => setOpen(!open)}>
         <div className="min-w-0">
-          <p className="font-mono text-[11px] text-muted-foreground">{entry.decision_date}</p>
+          <div className="flex items-center gap-2">
+            <span className={cn("h-2.5 w-2.5 rounded-full", roleDot[group])} />
+            <p className="font-mono text-[11px] text-muted-foreground">
+              {entry.decision_date} · {roleLabel[group]}
+            </p>
+          </div>
           <h3 className="mt-1 font-heading text-base font-semibold">{entry.change_title}</h3>
           <p className="mt-1 text-sm text-muted-foreground">Outcome: {entry.chosen_option}</p>
           <div className="mt-3 flex flex-wrap items-center gap-2">

@@ -4,6 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import TimelineFilters from "@/components/timeline/TimelineFilters";
 import TimelineEntry from "@/components/timeline/TimelineEntry";
+import TimeAxis from "@/components/timeline/TimeAxis";
 import { exportEntriesCsv } from "@/components/timeline/exportEntries";
 
 export default function DecisionTimeline() {
@@ -50,6 +51,10 @@ export default function DecisionTimeline() {
         </div>
       ) : (
         <div className="space-y-4">
+          <TimeAxis
+            entries={filtered}
+            onSelect={(id) => document.getElementById(`entry-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+          />
           {filtered.map((e) => (
             <TimelineEntry key={e.id} entry={e} />
           ))}

@@ -48,6 +48,14 @@ module.exports = {
   				'med-soft': 'hsl(var(--risk-med-soft))',
   				'low-soft': 'hsl(var(--risk-low-soft))'
   			},
+  			role: {
+  				eng: 'hsl(var(--role-eng))',
+  				mgr: 'hsl(var(--role-mgr))',
+  				other: 'hsl(var(--role-other))',
+  				'eng-soft': 'hsl(var(--role-eng-soft))',
+  				'mgr-soft': 'hsl(var(--role-mgr-soft))',
+  				'other-soft': 'hsl(var(--role-other-soft))'
+  			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
