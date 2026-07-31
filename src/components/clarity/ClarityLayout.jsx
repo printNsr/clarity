@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import TopBar from "./TopBar";
 import NavRail from "./NavRail";
+import DynamicBackground from "./DynamicBackground";
 
 const ClarityContext = createContext({ project: null, projects: [], refresh: () => {} });
 export const useClarity = () => useContext(ClarityContext);
@@ -15,7 +16,7 @@ export default function ClarityLayout() {
 
   const refresh = useCallback(async () => {
     const [ps, events] = await Promise.all([
-      base44.entities.Project.filter({ archived: false, name: "Horizon Tower" }, "-created_date"),
+      base44.entities.Project.filter({ archived: false }, "-created_date"),
       base44.entities.WorkflowEvent.list("-occurred_at", 5),
     ]);
     setProjects(ps);
@@ -27,7 +28,8 @@ export default function ClarityLayout() {
 
   return (
     <ClarityContext.Provider value={{ project, projects, refresh, setProject }}>
-      <div className="min-h-screen bg-[#F8FAFC] font-body text-[#1F2937]">
+      <div className="relative min-h-screen font-body text-foreground">
+        <DynamicBackground />
         <TopBar
           projects={projects}
           project={project}

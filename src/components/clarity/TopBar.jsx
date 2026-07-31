@@ -3,45 +3,46 @@ import { Menu, Search, Bell, ChevronDown, Check } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function TopBar({ projects = [], project, onSelectProject, notifications = [], onToggleRail }) {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
 
   return (
-    <header className="sticky top-0 z-30 flex h-[58px] items-center gap-3 border-b border-[#E5E7EB] bg-white px-4">
+    <header className="sticky top-0 z-30 flex h-[58px] items-center gap-3 border-b border-border bg-card/70 px-4 backdrop-blur-md">
       <div className="flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1F2937] text-xs font-bold text-white">C</span>
-        <span className="text-[15px] font-semibold text-[#1F2937]">Clarity</span>
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground">C</span>
+        <span className="text-[15px] font-semibold text-foreground">Clarity</span>
       </div>
 
-      <button onClick={onToggleRail} title="Menu" className="ml-2 rounded-md p-1.5 text-[#6B7280] hover:bg-[#F8FAFC] md:hidden">
+      <button onClick={onToggleRail} title="Menu" className="ml-2 rounded-md p-1.5 text-muted-foreground hover:bg-muted md:hidden">
         <Menu className="h-4 w-4" />
       </button>
 
       <Popover>
-        <PopoverTrigger className="ml-2 flex items-center gap-1.5 rounded-md border border-[#E5E7EB] px-2.5 py-1.5 text-[12px] text-[#1F2937] hover:bg-[#F8FAFC]">
+        <PopoverTrigger className="ml-2 flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-[12px] text-foreground transition-colors hover:bg-muted">
           Project: {project?.name || "Select project"}
-          <ChevronDown className="h-3.5 w-3.5 text-[#6B7280]" />
+          <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
         </PopoverTrigger>
         <PopoverContent align="start" className="w-64 p-1">
           {projects.map((p) => (
             <button
               key={p.id}
               onClick={() => onSelectProject(p)}
-              className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[12px] hover:bg-[#F8FAFC]"
+              className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[12px] hover:bg-muted"
             >
               {p.name}
-              {p.id === project?.id ? <Check className="h-3.5 w-3.5 text-[#2563EB]" /> : null}
+              {p.id === project?.id ? <Check className="h-3.5 w-3.5 text-accent" /> : null}
             </button>
           ))}
-          {projects.length === 0 ? <p className="px-2 py-1.5 text-[12px] text-[#6B7280]">No projects yet.</p> : null}
+          {projects.length === 0 ? <p className="px-2 py-1.5 text-[12px] text-muted-foreground">No projects yet.</p> : null}
         </PopoverContent>
       </Popover>
 
       <div className="ml-auto flex items-center gap-1">
         <Popover>
-          <PopoverTrigger title="Search" className="rounded-md p-2 text-[#6B7280] hover:bg-[#F8FAFC]">
+          <PopoverTrigger title="Search" className="rounded-md p-2 text-muted-foreground hover:bg-muted">
             <Search className="h-4 w-4" />
           </PopoverTrigger>
           <PopoverContent align="end" className="w-80 p-2">
@@ -51,29 +52,30 @@ export default function TopBar({ projects = [], project, onSelectProject, notifi
         </Popover>
 
         <Popover>
-          <PopoverTrigger title="Notifications" className="relative rounded-md p-2 text-[#6B7280] hover:bg-[#F8FAFC]">
+          <PopoverTrigger title="Notifications" className="relative rounded-md p-2 text-muted-foreground hover:bg-muted">
             <Bell className="h-4 w-4" />
             {notifications.length ? <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#EF4444]" /> : null}
           </PopoverTrigger>
           <PopoverContent align="end" className="w-80 p-1">
             {notifications.length === 0 ? (
-              <p className="px-2 py-2 text-[12px] text-[#6B7280]">Nothing new.</p>
+              <p className="px-2 py-2 text-[12px] text-muted-foreground">Nothing new.</p>
             ) : (
               notifications.map((n) => (
                 <button
                   key={n.id}
                   onClick={() => n.issue_id && navigate(`/changes/${n.issue_id}`)}
-                  className="block w-full rounded-md px-2 py-2 text-left hover:bg-[#F8FAFC]"
+                  className="block w-full rounded-md px-2 py-2 text-left hover:bg-muted"
                 >
-                  <p className="text-[12px] font-medium text-[#1F2937]">{n.title}</p>
-                  <p className="text-[11px] text-[#6B7280]">{n.description}</p>
+                  <p className="text-[12px] font-medium text-foreground">{n.title}</p>
+                  <p className="text-[11px] text-muted-foreground">{n.description}</p>
                 </button>
               ))
             )}
           </PopoverContent>
         </Popover>
 
-        <span className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#E5E7EB] text-[11px] font-semibold text-[#1F2937]">AA</span>
+        <ThemeToggle />
+        <span className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-foreground">AA</span>
       </div>
     </header>
   );
@@ -103,13 +105,13 @@ function SearchResults({ q, navigate }) {
   }, [q]);
 
   if (!q) return null;
-  if (!items.length) return <p className="px-2 py-2 text-[12px] text-[#6B7280]">No matches.</p>;
+  if (!items.length) return <p className="px-2 py-2 text-[12px] text-muted-foreground">No matches.</p>;
   return (
     <div className="mt-1">
       {items.map((i) => (
-        <button key={i.kind + i.id} onClick={() => navigate(i.to)} className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[12px] hover:bg-[#F8FAFC]">
-          <span className="truncate text-[#1F2937]">{i.label}</span>
-          <span className="ml-2 text-[11px] text-[#6B7280]">{i.kind}</span>
+        <button key={i.kind + i.id} onClick={() => navigate(i.to)} className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[12px] hover:bg-muted">
+          <span className="truncate text-foreground">{i.label}</span>
+          <span className="ml-2 text-[11px] text-muted-foreground">{i.kind}</span>
         </button>
       ))}
     </div>

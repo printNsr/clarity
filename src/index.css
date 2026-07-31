@@ -115,3 +115,13 @@
     @apply bg-background text-foreground font-body;
   }
 }
+
+/* Dark mode mapping for screens still using fixed light colours */
+@layer utilities {
+  .dark .bg-white { background-color: hsl(var(--card)); }
+  .dark .bg-\[\#F8FAFC\], .dark .bg-\[\#F1F5F9\], .dark .bg-\[\#E5E7EB\] { background-color: hsl(var(--muted)); }
+  .dark .hover\:bg-\[\#F8FAFC\]:hover, .dark .hover\:bg-\[\#F1F5F9\]:hover { background-color: hsl(var(--muted)); }
+  .dark .text-\[\#1F2937\] { color: hsl(var(--foreground)); }
+  .dark .text-\[\#6B7280\], .dark .text-\[\#9CA3AF\] { color: hsl(var(--muted-foreground)); }
+  .dark .border-\[\#E5E7EB\], .dark .border-\[\#F1F5F9\] { border-color: hsl(var(--border)); }
+}
