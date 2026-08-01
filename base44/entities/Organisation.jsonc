@@ -1,0 +1,42 @@
+{
+  "name": "Organisation",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "abn": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "ai_model": {
+      "type": "string",
+      "default": "mistral-large-latest"
+    },
+    "ai_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "data_retention_days": {
+      "type": "number",
+      "default": 365
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

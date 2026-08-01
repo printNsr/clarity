@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { UploadCloud, Loader2, FileText } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { normalizePlan } from "./normalizePlan";
+import { logAiUsage } from "@/components/clarity/ai/logAiUsage";
 
 const SCHEMA = {
   type: "object",
@@ -70,8 +71,10 @@ export default function PlanUpload({ onResult }) {
         response_json_schema: SCHEMA,
       });
       onResult({ ...normalizePlan(result), source_url: file_url, source_name: file.name });
+      logAiUsage({ feature: "Plan Analyzer", reference: file.name, output: result });
     } catch (e) {
       setError("We could not read that plan. Try a clearer photo or another file.");
+      logAiUsage({ feature: "Plan Analyzer", reference: file.name, status: "Failed" });
     }
     setBusy(false);
   };

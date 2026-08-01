@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Scale, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import MediatorResult from "./MediatorResult";
+import { logAiUsage } from "@/components/clarity/ai/logAiUsage";
 
 export default function MediatorCard({ issue }) {
   const [busy, setBusy] = useState(false);
@@ -15,8 +16,10 @@ export default function MediatorCard({ issue }) {
       const res = await base44.functions.invoke("mediateConflict", { issue_id: issue.id });
       if (res.data?.error) throw new Error(res.data.error);
       setResult(res.data);
+      logAiUsage({ feature: "Conflict Mediator", project_id: issue.project_id, reference: issue.title, output: res.data });
     } catch {
       setError("The mediator could not run right now. Please try again.");
+      logAiUsage({ feature: "Conflict Mediator", project_id: issue.project_id, reference: issue.title, status: "Failed" });
     }
     setBusy(false);
   };

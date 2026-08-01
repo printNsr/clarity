@@ -1,0 +1,48 @@
+{
+  "name": "AiUsageLog",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "feature": {
+      "type": "string",
+      "enum": [
+        "Ask Clarity",
+        "Conflict Mediator",
+        "Draft RFI",
+        "Alignment Analysis",
+        "Plan Analyzer"
+      ],
+      "default": "Ask Clarity"
+    },
+    "reference": {
+      "type": "string"
+    },
+    "input_summary": {
+      "type": "string"
+    },
+    "output_summary": {
+      "type": "string"
+    },
+    "output_chars": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Success",
+        "Failed"
+      ],
+      "default": "Success"
+    },
+    "ran_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "feature"
+  ]
+}

@@ -4,6 +4,7 @@ import { Loader2, Sparkles } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { useClarity } from "@/components/clarity/ClarityLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { logAiUsage } from "@/components/clarity/ai/logAiUsage";
 
 export default function DraftRfiLauncher() {
   const { project } = useClarity();
@@ -25,9 +26,11 @@ export default function DraftRfiLauncher() {
     try {
       const res = await base44.functions.invoke("draftRfi", { issue_id: issue.id });
       if (res.data?.error) throw new Error(res.data.error);
+      logAiUsage({ feature: "Draft RFI", project_id: issue.project_id, reference: issue.title, output: res.data });
       navigate(`/rfis/${res.data.rfi_id}`);
     } catch {
       setError("The RFI draft could not be created right now. Please try again.");
+      logAiUsage({ feature: "Draft RFI", project_id: issue.project_id, reference: issue.title, status: "Failed" });
       setBusyId(null);
     }
   };

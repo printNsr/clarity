@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Building2, ChevronRight } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { useClarity } from "@/components/clarity/ClarityLayout";
 import { Input } from "@/components/ui/input";
@@ -40,7 +42,21 @@ export default function ClaritySettingsPage() {
 
   return (
     <div className="max-w-xl space-y-4">
-      <h1 className="text-[22px] font-semibold">Settings</h1>
+      <div>
+        <h1 className="text-[22px] font-semibold tracking-tight">Settings</h1>
+        <p className="text-[12px] text-[#6B7280]">Set up projects, sample data and where to find your organisation details.</p>
+      </div>
+
+      <Link
+        to="/organisation"
+        className="flex items-center justify-between rounded-[10px] border border-[#E5E7EB] bg-white p-4 transition-colors hover:bg-[#F8FAFC]"
+      >
+        <span>
+          <span className="flex items-center gap-2 text-[14px] font-semibold"><Building2 className="h-4 w-4 text-[#6B7280]" /> Organisation</span>
+          <span className="mt-1 block text-[12px] text-[#6B7280]">Company details, stored AI outputs and the AI usage log.</span>
+        </span>
+        <ChevronRight className="h-4 w-4 text-[#6B7280]" />
+      </Link>
 
       <div className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
         <p className="text-[14px] font-semibold">New project</p>

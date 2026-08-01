@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Loader2, MessageSquare, Send, Sparkles, X } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import ChatMessage from "./ChatMessage";
+import { logAiUsage } from "@/components/clarity/ai/logAiUsage";
 
 const STARTERS = [
   "What needs a decision today?",
@@ -28,8 +29,10 @@ export default function ChatBubble() {
       const res = await base44.functions.invoke("clarityChat", { question, history });
       if (res.data?.error) throw new Error(res.data.error);
       setMessages((m) => [...m, { role: "assistant", text: res.data.answer, sources: res.data.sources }]);
+      logAiUsage({ feature: "Ask Clarity", input_summary: question, output: res.data.answer });
     } catch {
       setMessages((m) => [...m, { role: "assistant", text: "I could not reach the project records just now. Please try again." }]);
+      logAiUsage({ feature: "Ask Clarity", input_summary: question, status: "Failed" });
     }
     setBusy(false);
   };
