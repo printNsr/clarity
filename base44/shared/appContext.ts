@@ -11,7 +11,8 @@ export async function loadAppContext(base44) {
     base44.entities.TradeUpdate.list("-posted_at", 40),
     base44.entities.CollisionAnalysis.list("-created_date", 40),
   ]);
-  return { projects, issues, rfis, decisions, drawings, events, updates, analyses };
+  const files = await base44.entities.ProjectFile.list("-created_date", 60);
+  return { projects, issues, rfis, decisions, drawings, events, updates, analyses, files };
 }
 
 export function appContextText(d) {
@@ -45,6 +46,13 @@ export function appContextText(d) {
   if (d.drawings.length) {
     lines.push("\nDRAWINGS:");
     d.drawings.forEach((w) => lines.push(`- ${w.drawing_number} rev ${w.revision || "?"} ${w.title || ""} | ${w.discipline || "no discipline"} | status ${w.status}`));
+  }
+
+  if ((d.files || []).length) {
+    lines.push("\nPROJECT FILES ON RECORD:");
+    d.files.forEach((f) => lines.push(
+      `- [${name(f.project_id)}] ${f.name} | ${f.category}${f.discipline ? ` | ${f.discipline}` : ""} | ${f.ai_summary || "no summary read"}`
+    ));
   }
 
   if (d.updates.length) {

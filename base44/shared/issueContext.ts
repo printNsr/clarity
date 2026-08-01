@@ -7,10 +7,13 @@ export async function loadIssueContext(base44, issueId) {
     base44.entities.EvidenceFact.filter({ issue_id: issueId }, "order", 100),
     base44.entities.CollisionAnalysis.filter({ issue_id: issueId }, "-created_date", 1),
   ]);
-  return { issue, messages, facts, analysis: analyses[0] || null };
+  const files = issue.project_id
+    ? await base44.entities.ProjectFile.filter({ project_id: issue.project_id, use_in_analysis: true }, "-created_date", 15)
+    : [];
+  return { issue, messages, facts, analysis: analyses[0] || null, files };
 }
 
-export function contextText({ issue, messages, facts, analysis }) {
+export function contextText({ issue, messages, facts, analysis, files }) {
   const lines = [];
   lines.push(`CHANGE: ${issue.title}`);
   if (issue.description) lines.push(`Description: ${issue.description}`);
@@ -42,6 +45,13 @@ export function contextText({ issue, messages, facts, analysis }) {
     messages.forEach((m) => {
       const body = m.text || m.transcript || "";
       if (body) lines.push(`${m.author || "Someone"} [${m.discipline || "General"}]: ${body}`);
+    });
+  }
+
+  if ((files || []).length) {
+    lines.push("\nPROJECT FILES YOU CAN REFER TO:");
+    files.forEach((f) => {
+      lines.push(`${f.name} (${f.category}${f.discipline ? `, ${f.discipline}` : ""}): ${f.ai_summary || "no summary read"}`);
     });
   }
 
