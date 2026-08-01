@@ -1,0 +1,44 @@
+{
+  "name": "ProjectFile",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Drawing",
+        "Specification",
+        "Report",
+        "Contract",
+        "Photo",
+        "Meeting notes",
+        "Other"
+      ],
+      "default": "Other"
+    },
+    "discipline": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "ai_summary": {
+      "type": "string"
+    },
+    "use_in_analysis": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

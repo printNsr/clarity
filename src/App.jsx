@@ -26,6 +26,7 @@ import DrawingUpdatePage from '@/pages/DrawingUpdatePage';
 import PlanAnalyzerPage from '@/pages/PlanAnalyzerPage';
 import ClaritySettingsPage from '@/pages/ClaritySettingsPage';
 import OrganisationPage from '@/pages/OrganisationPage';
+import ProjectFilesPage from '@/pages/ProjectFilesPage';
 import UpdatesPage from '@/pages/UpdatesPage';
 import DesignChangeIssuePage from '@/pages/DesignChangeIssuePage';
 import { Navigate } from 'react-router-dom';
@@ -79,6 +80,7 @@ const AuthenticatedApp = () => {
           <Route path="/updates" element={<UpdatesPage />} />
           <Route path="/design-change" element={<DesignChangeIssuePage />} />
           <Route path="/design-change/:issueId" element={<DesignChangeIssuePage />} />
+          <Route path="/files" element={<ProjectFilesPage />} />
           <Route path="/organisation" element={<OrganisationPage />} />
           <Route path="/settings" element={<ClaritySettingsPage />} />
         </Route>

@@ -7,6 +7,19 @@ export async function runAnalysis(issue, messages, facts) {
   const stated = facts.filter((f) => f.classification !== "Missing");
   const missing = facts.filter((f) => f.classification === "Missing");
 
+  let projectFiles = [];
+  if (issue.project_id) {
+    projectFiles = await base44.entities.ProjectFile.filter(
+      { project_id: issue.project_id, use_in_analysis: true },
+      "-created_date",
+      12,
+    );
+  }
+  const fileText = projectFiles
+    .filter((f) => f.ai_summary)
+    .map((f) => `${f.name} (${f.category}): ${f.ai_summary}`)
+    .join(" | ");
+
   let result = null;
   try {
     const prompt = `You are a construction coordination assistant. Analyse this design change for meaningful collisions between disciplines.
@@ -16,6 +29,8 @@ Location: ${[issue.level, issue.zone].filter(Boolean).join(", ")}
 Elements: ${(issue.elements || []).join(", ")}
 Discussion: ${messages.map((m) => `${m.discipline} (${m.author}): ${m.transcript || m.text}`).join(" | ")}
 Evidence: ${facts.map((f) => `${f.discipline} [${f.classification}]: ${f.text}`).join(" | ")}
+Project files on record: ${fileText || "none uploaded"}
+Use the project files as supporting evidence. When a file backs up a point, name that file in the summary or impact explanation.
 Only report a collision when the assumptions really conflict.`;
 
     result = await base44.integrations.Core.InvokeLLM({
